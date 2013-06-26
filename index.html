@@ -1,0 +1,652 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>浮层</title>
+<style type="text/css">
+*{margin:0;padding:0; font-family:\5FAE\8F6F\96C5\9ED1;}
+ul{list-style-type:none;}
+body{background:url(http://pics2.paipaiimg.com/update/20120809/index_intr.jpg) no-repeat 600px -1% #fff;font:12px/20px Arial;}
+.float-wrap {width:985px; margin:0 auto; background:#f2f2f2; height:2000px; position:relative;}
+.control-bar {width:565px; position:fixed; top:10px; left:10px;background:url(http://pics3.paipaiimg.com/update/20120724/index_ifloating_bg.jpg) no-repeat center bottom #292929;  border-radius:5px; box-shadow:3px 3px 10px #999; padding:15px; padding-bottom:50px; }
+.block {cursor:pointer;}
+.title {margin:5px;position:relative;}
+.title h3 {font-size:20px; color:#fff; text-shadow:2px 2px 2px #000; font-weight:normal;}
+.title button {position:absolute; right:10px; top:-9px;}
+.menu {padding:10px 0 20px;}
+.menu li {line-height:24px; color:#fff; margin-right:10px; display:none;}
+.menu li inpit {vertical-align:-1px;}
+.menu button {display:inline-block; margin-right:10px;}
+.menu span {color:#fff; display:none;}
+input[type='radio'] {vertical-align:-2px; margin:0 10px 0 0;}
+button {padding:5px 20px; margin-top:10px; background-image:-moz-linear-gradient(top,#727272,#5d5c5c);background-image:-webkit-gradient(linear,center top,center bottom,from(#727272),to(#5d5c5c)); cursor:pointer; border-radius:5px; border:none; color:#fff;}
+.menu label {margin-right:10px; cursor:pointer;}
+.menu_img input[type='text'] {width:430px; height:14px; padding:3px; font-size:12px; line-height:12px;}
+.float-box {position:relative;}
+.menu li.link-menu {padding-top:20px;}
+.link-menu div {margin-bottom:10px;}
+.link-menu span {display:inline-block; width:45px;}
+.link-menu input {margin-right:10px;}
+#linkUrl {width:550px;}
+#url-style {width:242px;}
+#ptag {}
+.code-bg {width:100%; height:100%; background:#000; opacity:0.5; position:fixed; z-index:10; top:0; left:0; display:none;}
+.code {width:570px; background:#a42820; box-shadow:3px 5px 14px #333; padding:0 15px 15px; position:fixed; left:50%; margin-left:-350px; top:160px; z-index:11; display:none;}
+.code embed {margin:10px 0;}
+.code h3 {width:100%; line-height:40px; color:#fff; text-align:left; position:relative; font-size:16px;}
+.code h3 span {position:absolute; right:10px; top:12px; padding:2px 3px; font-weight:normal; cursor:pointer; font-size:12px; color:#fff; height:16px; line-height:16px;}
+.code textarea {width:100%; height:350px; color:#333; overflow:auto; overflow-x:hidden;}
+#codeop {background-image:-moz-linear-gradient(top,#c60d04,#a8170e);background-image:-webkit-gradient(linear,center top,center bottom,from(#c60d04),to(#a8170e)); }
+/* http://pics1.paipaiimg.com/update/20120203/index_float-layout.jpg */
+.menu .tips {position:absolute; padding:10px; background:#fff; right:100px; top:20px; border-radius:5px; color:#990000;}
+.menu .tips:before {position:absolute; content:''; background:#fff; border-radius:20px; width:20px; height:20px; left:15px; top:35px;}
+.menu .tips:after {position:absolute; content:''; background:#fff; border-radius:13px; width:13px; height:13px; left:5px; top:55px;}
+.menu .tips-2 {padding:5px 10px; top:110px; width:340px; right:40px;}
+.menu .tips-2:before {position:absolute; content:''; background:#fff; border-radius:20px; width:20px; height:20px; left:15px; top:-10px;}
+.menu .tips-2:after {position:absolute; content:''; background:#fff; border-radius:13px; width:13px; height:13px; left:7px; top:-25px;}
+.br-tips a {color:#fff; margin:0 5px;}
+.br-tips {position:absolute; left:10px; bottom:7px; color:#fff;}
+.block {border:1px dashed #00bbf4;background-color: #006699; opacity:0.5; -webkit-animation:flash 1.5s ease forwards infinite;}
+
+@-webkit-keyframes flash {
+  0% {border:1px dashed #00bbf4; background:#006699;}
+	50% {border:1px dashed #fff; background:#00bbf4;}
+	100% {border:1px dashed #00bbf4; background:#006699;}
+	}
+</style>
+<script type="text/javascript" src="jquery.js"></script>
+<script type="text/javascript" src="jquery-ui-1.8.16.custom.min.js"></script>
+
+</head>
+
+<body>
+<div class="floating">
+	<div class="float-box"></div>
+</div>
+<div class="control-bar">
+	<span class="br-tips">（使用Firfox或者Chrome浏览器可以达到最佳效果）</span>
+     <div class="title">
+     	<h3>浮层制作</h3>
+     </div>
+     <div class="menu">
+     	<ul>
+        	<li class="menu_position">
+            	<span>请选择位置：</span>
+                <input type="radio" name="position" value="p-Right" checked="checked" id="p-r"><label for="p-r">右侧</label>
+                <input type="radio" name="position" value="p-Right" id="p-b"><label for="p-b">底部通栏</label>
+                <div class=""><button>下一步</button></div>
+                <div class="tips tips-1">
+                	请选择你的浮层是在右侧或者是在底部，默认是右侧^ ^
+                </div>
+            </li>
+            <li class="menu_width">
+            	<span>请选择容器宽度：</span>
+                <input type="radio" name="WrapWidth" value="W-985" checked="checked" id="w-985"><label for="w-985">985 px</label>
+                <input type="radio" name="WrapWidth" value="W-950" id="w-950"><label for="w-950">950 px</label>
+                <div class=""><button class="prev">上一步</button><button class="next">下一步</button></div>
+                <div class="tips tips-1">
+                	请选择你的页面宽度，默认是 985px ^ ^
+                </div>
+            </li>
+            <li class="menu_img">
+            	<span>输入图片路径（请将图片上传到PPMS）：</span>
+                <div class=""><input type="text" class="insert-img" value="http://pics0.paipaiimg.com/update/20120807/index_floating_baby.png" /></div>
+                <div class=""><button>点击插入浮层图片</button><span class="tips-1">请点击右侧图片进行编辑</span></div>
+                
+                <div class="tips tips-2">
+                	将你做好的图，用PPMS图片上传工具（<a href="http://ppms.paipaioa.com/php/photos.php" target="_blank">点我进入</a>）上传，将地址复制到输入框，点击按钮就可以生成浮层图片啦！
+                </div>
+            </li>
+            <li class="floating-opt">
+                <div class="">
+                	<div class="insert-link"><button>点击插入链接</button></div>
+                </div>
+            </li>
+            <li class="link-menu">
+                <div class="" id="linkSize">
+                	<span>宽：</span><input type="text" /><span>高：</span><input type="text" />
+                </div>
+                <div class="" id="linkPos">
+                	<span>x：</span><input type="text" value="10" /><span>y：</span><input type="text" value="10" />
+                </div>
+                <div class="" id="linkUrl">
+                	<span>url：</span>
+                    <select>
+                    	<option value="1" selected="selected">锚点</option>
+                        <option value="2">外部链接</option>
+                    </select>
+                    <input type="text" id="url-style" />
+                </div>
+                <div class="" id="ptag">
+                	<input type="radio" name="RD" value="PTAG" checked="checked" id="rd-PTAG"><label for="rd-PTAG">拍拍PTAG</label>
+                	<input type="radio" name="RD" value="WGTAG" id="rd-WGTAG"><label for="rd-WGTAG">网购WGTAG</label>
+                    <div>
+                        <span>RD：</span>
+                        <input type="text" id="rd-txt" />
+                    </div>
+                </div>
+            	<button id="codeop">点击生成代码</button>
+            </li>
+        </ul>
+     </div>
+</div>
+     <div class="code-bg"></div>
+     <div class="code">
+   	   <h3>
+       	<div></div>
+       	<span class="btn">点我可以隐藏代码框</span>
+       </h3>
+       <div id="codeoutput">
+        </div>
+     </div>
+
+<script type="text/javascript">
+$(document).ready(function(){
+	var PosJudge;
+	var WidthJudge;
+	var isPosRight = true;
+	var isWidth985 = true;
+	var vision = Math.floor(Math.random()*10000);
+	var controlMenu = {
+			subMenu : $('.menu li'),
+			sPositionBtn : $('.menu_position button'),
+			sWidthBtnP : $('.menu_width .prev'),
+			sWidthBtnN : $('.menu_width .next'),
+			imgBtn : $('.menu_img button'),
+			imgUrl : '',
+			imgWidth : 0,
+			imgHeight : 0,
+			linkNum : 0,
+			linkPosX : {},
+			linkPosY : {},
+			ptag:{},
+			linkPtag: '',
+			numControl : '',
+			iscontrol : false,
+			isfoucs : false,
+			bgX : '',
+			bgY : '',
+			linkW: {},
+			linkH: {},
+			linkUrl: {},
+			floatCss : {},
+			floatCode : {},
+			rdRadio : {},
+			css: '',
+			code : '',
+			isLink: {},
+			linktype: {},
+			codeOut: '敢不敢加个图片加个链接什么的！敢不敢！',
+			codeOutPut : function(){
+				controlMenu.css = '';
+				controlMenu.code = '';
+				for(var i=0;i<controlMenu.linkNum;i++){
+					controlMenu.css+=controlMenu.floatCss[i];
+					controlMenu.code+=controlMenu.floatCode[i];
+				}
+				
+				var floatingCode = '';
+				var floatingBottomCode = '';
+				var posCode = '';
+				
+				//判断浮层位置
+				if (isPosRight == true) {
+					if(isWidth985 == true){
+						floatingCode = '';
+						floatingBottomCode = 'left:50%25; margin-left:502px; bottom:120px;';
+						} else {
+						floatingCode = '';
+						floatingBottomCode = 'left:50%25; margin-left:485px; bottom:120px;';
+							}
+						posCode = 'pos="auto"';
+					} else {
+					if(isWidth985 == true) {
+						floatingCode = 'margin-left:-'+ controlMenu.imgWidth/2 + 'px; left:50%25;';
+						floatingBottomCode = 'left:0; bottom:0; width:100%25; overflow:hidden;';
+						} 
+						posCode = '';
+						}
+				
+				
+				
+				//删除事件
+				$(document).keydown(function(event){
+					 //del键 
+					 if(event.keyCode == 46){
+					 if(controlMenu.iscontrol == true){
+						   $('#link_' + controlMenu.numControl).remove();
+						   controlMenu.iscontrol = false;
+						   $('.link-menu').hide();
+						   controlMenu.floatCss[controlMenu.numControl] = '';
+						   controlMenu.floatCode[controlMenu.numControl] = '';
+						   controlMenu.numControl = '';
+						   controlMenu.codeOutPut();
+					 }
+					 }
+
+				
+					});
+
+				$('.menu input').focusin(function(){
+					controlMenu.isfoucs = true;
+				}).focusout(function(){
+					controlMenu.isfoucs = false;
+				});
+
+
+				
+				controlMenu.codeOut = '<!--S floating生成器-->\n<style>'+ '\n.floating_' + vision + '{position:fixed;_position:absolute; z-index:61;' + floatingBottomCode + '}\n.float-box_' + vision + '{position:relative; width:' + controlMenu.imgWidth + 'px;height:' + controlMenu.imgHeight + 'px;background:url(' + controlMenu.imgUrl + ') no-repeat center top; '+ floatingCode +'}\n.float-box_' + vision + ' a{display:block;background:url(about:blank);position:absolute;}' + controlMenu.css + '</style>\n<div class="floating_' + vision + '" tag="float_guide" '+ posCode +'>\n<div class="float-box_' + vision + '">\n'+ controlMenu.code +'\n</div>\n</div>\n<!--E floating生成器-->'
+				
+				},
+			liModeChange:function(){
+				$('#link_' + controlMenu.numControl).css({
+					'width' : controlMenu.linkW[controlMenu.numControl] + 'px',
+					'height' : controlMenu.linkH[controlMenu.numControl] + 'px',
+					'left' : controlMenu.linkPosX[controlMenu.numControl] + 'px',
+					'top': controlMenu.linkPosY[controlMenu.numControl] + 'px'
+				});
+				}
+		};
+		
+	//copy事件
+	$(document).keydown(function(event){
+		if (controlMenu.isfoucs == false) {
+			//v
+		 if(event.keyCode == 86){
+		 	copyLink();
+		 }
+		 
+		 //right
+		 if(event.keyCode == 102){
+			 controlMenu.linkW[controlMenu.numControl]++;
+			 controlMenu.liModeChange();
+			 getValue();
+			 }
+			 
+		
+		 //left
+		 if(event.keyCode == 100){
+			 controlMenu.linkW[controlMenu.numControl]--;
+			 controlMenu.liModeChange();
+			 getValue();
+			 }
+		
+		 //up
+		 if(event.keyCode == 104){
+			 controlMenu.linkH[controlMenu.numControl]--;
+			 controlMenu.liModeChange();
+			 getValue();
+			 }
+		
+		 //down
+		 if(event.keyCode == 98){
+			 controlMenu.linkH[controlMenu.numControl]++;
+			 controlMenu.liModeChange();
+			 getValue();
+			 }
+			 
+		//move up
+		 if(event.keyCode == 38){
+			 controlMenu.linkPosY[controlMenu.numControl]--;
+			 controlMenu.liModeChange();
+			 getValue();
+			 }
+			 
+		//move down
+		 if(event.keyCode == 40){
+			 controlMenu.linkPosY[controlMenu.numControl]++;
+			 controlMenu.liModeChange();
+			 getValue();
+			 }
+			 
+		//move left
+		 if(event.keyCode == 37){
+			 controlMenu.linkPosX[controlMenu.numControl]--;
+			 controlMenu.liModeChange();
+			 getValue();
+			 }
+			 
+		//move right
+		 if(event.keyCode == 39){
+			 controlMenu.linkPosX[controlMenu.numControl]++;
+			 controlMenu.liModeChange();
+			 getValue();
+			 }
+		 
+		};
+		});
+		
+	//菜单显示控制	
+	
+	$('.menu_position').show();
+	
+	controlMenu.sPositionBtn.click(function(){
+		$('.menu_position').hide();
+		$('.menu_width').show();
+		});
+	controlMenu.sWidthBtnN.click(function(){
+		$('.menu_width').hide();
+		$('.menu_img').show();
+		});
+	controlMenu.sWidthBtnP.click(function(){
+		$('.menu_width').hide();
+		$('.menu_position').show();
+		});
+		
+	//插入图片
+	$('.insert-img').change(function(){
+		controlMenu.imgUrl = $('.insert-img').attr('value');
+		/* 强制计数器初始化 */
+		controlMenu.linkNum = 0;
+		});
+	controlMenu.imgUrl = $('.insert-img').attr('value');
+	controlMenu.imgBtn.click(function(){
+		//$('<img class="float-img" />').appendTo('.float-box');
+		$('.float-box').html('<img class="float-img" />');
+		$('.float-img').attr('src', controlMenu.imgUrl);
+		$('.tips-1').show();
+		$('.tips-2').hide('fast');
+		
+		
+		
+	//获取图片尺寸
+		$('.float-img').load(function(){
+			controlMenu.imgWidth = $('.float-img').width();
+			controlMenu.imgHeight = $('.float-img').height();
+			
+			$('.float-box').css({
+				'width' : controlMenu.imgWidth + 'px',
+				'height' : controlMenu.imgHeight + 'px'
+				});
+			});
+		$('.floating').css({
+			'position' : 'fixed'
+			});
+			
+		//判断浮层位置
+		if ($('#p-r').attr('checked') == 'checked') {
+			$('.floating').css({
+				'left' : '50%' ,
+				'top' : 150 + 'px'
+				});
+			isPosRight = true;
+		} else {
+			$('.floating').css({
+				'left' : 0 ,
+				'top' : 600 + 'px'
+				});
+			isPosRight = false;
+		}
+		
+		if ($('#w-985').attr('checked') == 'checked'&$('#p-r').attr('checked') == 'checked') {
+			$('.floating').css({
+				'margin-left' : 502 + 'px'
+				});
+			isWidth985 = true;
+		} else if ($('#w-950').attr('checked') == 'checked'&$('#p-r').attr('checked') == 'checked') {
+			$('.floating').css({
+				'margin-left' : 485 + 'px'
+				});
+			isWidth985 = false;
+			
+		}
+		
+		//
+		
+		
+		
+		
+		controlMenu.bgX = $('.floating').offset().left;
+		controlMenu.bgY = $('.floating').offset().top;
+		
+		});
+	$('.float-box').mousedown(
+		function(){
+			$('.floating-opt').show().siblings('li').hide();
+			}
+	);
+	
+	//插入按钮
+	$('.insert-link').click(function(){
+		$('<div class="" id="link_' + controlMenu.linkNum + '" index="' + controlMenu.linkNum + '" href=""></div>').addClass('block').appendTo('.float-box');
+		controlMenu.numControl = controlMenu.linkNum;
+		controlMenu.linkPosX[controlMenu.numControl] = 0;
+		controlMenu.linkPosY[controlMenu.numControl] = 0;
+		controlMenu.linkW[controlMenu.numControl] = 65;
+		controlMenu.linkH[controlMenu.numControl] = 28;
+		controlMenu.linkUrl[controlMenu.numControl] = '';
+		controlMenu.isLink[controlMenu.numControl] = 1;
+		controlMenu.rdRadio[controlMenu.numControl] = 'WGTAG';
+		controlMenu.linktype[controlMenu.numControl] = '';
+		controlMenu.ptag[controlMenu.numControl] = '';
+		
+		
+		$('#link_' + controlMenu.linkNum).css({
+				'position' : 'absolute',
+				'width' : controlMenu.linkW[controlMenu.numControl],
+				'height' : controlMenu.linkH[controlMenu.numControl],
+				'left' : controlMenu.linkPosX[controlMenu.numControl] + 'px',
+				'top': controlMenu.linkPosY[controlMenu.numControl] + 'px'
+			});
+			$(".block").draggable();
+			
+			$('#link_' + controlMenu.linkNum).live('mousedown',function(){
+				var zindex = $(this).attr('index');
+				controlMenu.numControl = zindex;
+				$('.link-menu').show();
+				controlMenu.iscontrol = true;
+				getValue();
+				
+				});
+			
+			$('#link_' + controlMenu.linkNum).live('mousemove',function(){
+				if (controlMenu.iscontrol == true) {
+				targetPos();
+				getValue();
+				}
+				});
+			
+			
+			controlMenu.linkNum++;
+			getValue();
+					
+		});
+	
+	function copyLink(){
+		var copynum = controlMenu.numControl;
+		$('<div class="" id="link_' + controlMenu.linkNum + '" index="' + controlMenu.linkNum + '" href=""></div>').addClass('block').appendTo('.float-box');
+		controlMenu.numControl = controlMenu.linkNum;
+		controlMenu.linkPosX[controlMenu.numControl] = controlMenu.linkPosX[copynum];
+		controlMenu.linkPosY[controlMenu.numControl] = controlMenu.linkPosY[copynum];
+		controlMenu.linkW[controlMenu.numControl] = controlMenu.linkW[copynum];
+		controlMenu.linkH[controlMenu.numControl] = controlMenu.linkH[copynum];
+		controlMenu.linkUrl[controlMenu.numControl] = '';
+		controlMenu.isLink[controlMenu.numControl] = 1;
+		controlMenu.rdRadio[controlMenu.numControl] = 'WGTAG';
+		controlMenu.linktype[controlMenu.numControl] = '';
+		controlMenu.ptag[controlMenu.numControl] = '';
+
+		$('#link_' + controlMenu.linkNum).css({
+				'position' : 'absolute',
+				'width' : controlMenu.linkW[controlMenu.numControl],
+				'height' : controlMenu.linkH[controlMenu.numControl],
+				'left' : controlMenu.linkPosX[controlMenu.numControl] + 'px',
+				'top': controlMenu.linkPosY[controlMenu.numControl] + 'px'
+			});
+			$(".block").draggable();
+			
+			$('#link_' + controlMenu.linkNum).live('mousedown',function(){
+				var zindex = $(this).attr('index');
+				controlMenu.numControl = zindex;
+				$('.link-menu').show();
+				controlMenu.iscontrol = true;
+				getValue();
+				});
+			
+			$('#link_' + controlMenu.linkNum).live('mousemove',function(){
+				if (controlMenu.iscontrol == true) {
+				targetPos();
+				getValue();
+				}
+				});
+			
+			
+			controlMenu.linkNum++;
+			isTarget();
+			getValue();
+	}
+	
+	
+	
+	//实现变化数值
+	function targetPos(){
+		controlMenu.linkPosX[controlMenu.numControl] = $('#link_' + controlMenu.numControl).offset().left - controlMenu.bgX;
+		controlMenu.linkPosY[controlMenu.numControl] = $('#link_' + controlMenu.numControl).offset().top - controlMenu.bgY;
+		}
+		
+	function getValue(){
+		if(controlMenu.isLink[controlMenu.numControl] == 1){
+			$('#linkUrl option:eq(0)').attr('selected','selected');
+			}
+		else {
+			$('#linkUrl option:eq(1)').attr('selected','selected');
+			}
+			
+		if(controlMenu.rdRadio[controlMenu.numControl] == 'PTAG'){
+			$('#ptag input[type="radio"]:eq(0)').removeAttr('checked');
+			$('#ptag input[type="radio"]:eq(1)').attr('checked','checked');
+			}
+		else {
+			$('#ptag input[type="radio"]:eq(1)').removeAttr('checked');
+			$('#ptag input[type="radio"]:eq(0)').attr('checked','checked');
+			}
+
+
+		$('#linkPos input:eq(0)').attr('value',controlMenu.linkPosX[controlMenu.numControl]);
+		$('#linkPos input:eq(1)').attr('value',controlMenu.linkPosY[controlMenu.numControl]);
+		$('#linkSize input:eq(0)').attr('value',controlMenu.linkW[controlMenu.numControl]);
+		$('#linkSize input:eq(1)').attr('value',controlMenu.linkH[controlMenu.numControl]);
+		$('#url-style').attr('value',controlMenu.linkUrl[controlMenu.numControl]);
+		$('#rd-txt').attr('value',controlMenu.ptag[controlMenu.numControl]);
+		isTarget();
+		
+		controlMenu.floatCss[controlMenu.numControl] = '\n.link_' + controlMenu.numControl + '_' + vision +  '{left:' + controlMenu.linkPosX[controlMenu.numControl] + 'px; top:' + controlMenu.linkPosY[controlMenu.numControl] + 'px;width:' + controlMenu.linkW[controlMenu.numControl] + 'px;height:' + controlMenu.linkH[controlMenu.numControl] + 'px;}';
+		
+		controlMenu.floatCode[controlMenu.numControl] = '\n<a href="' + controlMenu.linkUrl[controlMenu.numControl] + controlMenu.linkPtag +'" ' + controlMenu.linktype[controlMenu.numControl] + ' class="link_' + controlMenu.numControl + '_' + vision +'"></a>';
+		controlMenu.codeOutPut();
+		}
+	
+	$('#linkUrl select').change(function(){
+		controlMenu.isLink[controlMenu.numControl] = $('#linkUrl select').attr('value');
+		getValue();
+		isTarget();
+		});
+		
+	$('#ptag input[type="radio"]').change(function(){
+		if($('#rd-PTAG').attr('checked')== 'checked'){
+			controlMenu.rdRadio[controlMenu.numControl] = $('#ptag input[type="radio"]:eq(1)').attr('value');
+			} else {
+			controlMenu.rdRadio[controlMenu.numControl] = $('#ptag input[type="radio"]:eq(0)').attr('value');
+				}
+		isTarget();
+		getValue();
+		});
+	
+
+	
+	
+	function isTarget(){
+		if($('#linkUrl select').attr('value') == 1) {
+			if($('#rd-WGTAG').attr('checked')== 'checked'){
+				controlMenu.linktype[controlMenu.numControl] = 'WGTAG="' + controlMenu.ptag[controlMenu.numControl]   +'" ';
+			}
+			else if ($('#rd-PTAG').attr('checked')== 'checked') {
+				controlMenu.linktype[controlMenu.numControl] = 'tag="anchor" ' + 'ptag="' + controlMenu.ptag[controlMenu.numControl]   +'" ';
+				}
+			controlMenu.linkPtag = '';
+			}	
+		else {
+			controlMenu.linktype[controlMenu.numControl] = 'target="_blank"';
+			if($('#rd-WGTAG').attr('checked')== 'checked'){
+				if($('#rd-txt').attr('value') == ''){
+				controlMenu.linkPtag = '';
+				} else {
+				controlMenu.linkPtag = '?WGTAG=' + controlMenu.ptag[controlMenu.numControl];
+					}
+				} 
+			else if ($('#rd-PTAG').attr('checked')== 'checked') {
+				if($('#rd-txt').attr('value') == ''){
+				controlMenu.linkPtag = '';
+				} else {
+				controlMenu.linkPtag = '?PTAG=' + controlMenu.ptag[controlMenu.numControl];
+					}
+				} 
+			} 
+		}
+	
+	$('#linkPos input:eq(0)').change(function(){
+		controlMenu.linkPosX[controlMenu.numControl] = $('#linkPos input:eq(0)').attr('value');
+		$('#link_' + controlMenu.numControl).css({
+			'left' : controlMenu.linkPosX[controlMenu.numControl] + 'px'
+			});
+		getValue();
+		});
+	$('#linkPos input:eq(1)').change(function(){
+		controlMenu.linkPosY[controlMenu.numControl] = $('#linkPos input:eq(1)').attr('value');
+		$('#link_' + controlMenu.numControl).css({
+			'top' : controlMenu.linkPosY[controlMenu.numControl] + 'px'
+			});
+		getValue();
+		});
+	
+	$('#linkSize input:eq(0)').change(function(){
+		controlMenu.linkW[controlMenu.numControl] = $('#linkSize input:eq(0)').attr('value');
+		$('#link_' + controlMenu.numControl).css({
+			'width' : controlMenu.linkW[controlMenu.numControl] + 'px'
+			});
+		getValue();
+		});
+	$('#linkSize input:eq(1)').change(function(){
+		controlMenu.linkH[controlMenu.numControl] = $('#linkSize input:eq(1)').attr('value');
+		$('#link_' + controlMenu.numControl).css({
+			'height' : controlMenu.linkH[controlMenu.numControl] + 'px'
+			});
+		getValue();
+		});
+	$('#url-style').change(function(){
+		controlMenu.linkUrl[controlMenu.numControl] = $('#url-style').attr('value');
+		$('#link_' + controlMenu.numControl).attr('href',controlMenu.linkUrl[controlMenu.numControl]);
+		getValue();
+		});
+	
+	$('#rd-txt').change(function(){
+		controlMenu.ptag[controlMenu.numControl] = $('#rd-txt').attr('value');
+		if($('#rd-WGTAG').attr('checked')== 'checked'){
+			$('#link_' + controlMenu.numControl).attr('WGTAG',controlMenu.ptag[controlMenu.numControl]);
+		} else if ($('#rd-PTAG').attr('checked')== 'checked') {
+			$('#link_' + controlMenu.numControl).attr('PTAG',controlMenu.ptag[controlMenu.numControl]);
+			}
+		getValue();
+		});
+		
+	$('.code h3 span').click(function(){
+		$('.code-bg').hide();
+		$('.code').hide();
+		});
+	
+		
+	$('#codeop').click(function(){
+		$('.code-bg').show();
+		$('.code').show();
+		$('#codeoutput').html('<textarea>' + controlMenu.codeOut.replace(/%25/g,'%') + '</textarea>');
+		$('.code h3 div').html("<embed width='62' height='24' align='center' flashvars='txt=" + controlMenu.codeOut + "' src='http://lasas.me/floating/Copy.swf' quality='high' wmode='transparent' allowscriptaccess='sameDomain' pluginspage='http://www.adobe.com/go/getflashplayer' type='application/x-shockwave-flash'><em>请尽量使用此复制功能复制代码</em>");
+		
+		});
+	
+});
+
+
+//<embed width="62" height="24" align="center" flashvars='' src="http://www.3anshi.com/wp-content/themes/AN3/Copy.swf" quality="high" wmode="transparent" allowscriptaccess="sameDomain" pluginspage="http://www.adobe.com/go/getflashplayer" type="application/x-shockwave-flash">
+</script>
+</body>
+</html>
